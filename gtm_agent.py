@@ -16,19 +16,18 @@ JIRA_URL = os.getenv("JIRA_URL")
 JIRA_EMAIL = os.getenv("JIRA_EMAIL")
 JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
 
-# --- 2. 데이터 수집 함수 (본문 및 실제 지라 전체 연동) ---
+# --- 2. 데이터 수집 함수 (250K 토큰 제한에 맞춘 최적화 수집) ---
 
-# [수정] 실제 Jira 데이터 무제한 연동 (하드코딩 제거)
 def fetch_jira_data():
-    print("📋 [Step 0] 실제 Jira 파이프라인 데이터 전체 연동 중...")
+    print("📋 [Step 0] 실제 Jira 파이프라인 무제한 연동 중...")
     if not JIRA_URL or not JIRA_EMAIL or not JIRA_API_TOKEN:
         return "Jira API 정보가 없어 파이프라인을 확인할 수 없습니다."
     try:
         jira_options = {'server': JIRA_URL}
         jira = JIRA(options=jira_options, basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN))
-        # maxResults=False를 통해 개수 제한 없이 파이프라인 전체 이슈를 다 가져옵니다.
+        # maxResults=False로 전부 가져오되, 토큰 폭발을 막기 위해 키와 요약만 깔끔하게 연결
         issues = jira.search_issues('ORDER BY updated DESC', maxResults=False)
-        jira_text = f"Jira 파이프라인 전체 티켓 요약 (총 {len(issues)}개):\n"
+        jira_text = f"Jira 파이프라인 전체 티켓 (총 {len(issues)}개):\n"
         for issue in issues:
             jira_text += f"- [{issue.key}] {issue.fields.summary}\n"
         return jira_text
@@ -55,23 +54,23 @@ def fetch_furiosa_docs():
             res = requests.get(url, timeout=10)
             soup = BeautifulSoup(res.text, 'html.parser')
             for s in soup(["script", "style"]): s.decompose()
-            all_text += f"\n\n[출처: {url}]\n{soup.get_text(separator=' ', strip=True)}"
+            # 토큰 한도를 위해 문서당 핵심 3000자씩만 추출 (이것만 해도 모델 정보는 충분함)
+            all_text += f"\n\n[출처: {url}]\n{soup.get_text(separator=' ', strip=True)[:3000]}"
             time.sleep(0.1)
         except Exception as e:
             print(f"⚠️ {url} 수집 실패: {e}")
             sys.exit(1)
     return all_text
 
-# [유지] 뉴스 기사 본문 전체 크롤링 함수
 def fetch_full_article(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
         res = requests.get(url, headers=headers, timeout=5)
         soup = BeautifulSoup(res.text, 'html.parser')
         for s in soup(["script", "style"]): s.decompose()
-        # 기사 본문 텍스트만 추출해서 최대 3000자 반환
+        # 기사 본문 역시 토큰 제한을 위해 최대 2000자로 요약하여 전달
         text = soup.get_text(separator=' ', strip=True)
-        return text[:3000]
+        return text[:2000]
     except:
         return "본문 크롤링 실패 (요약문으로 대체)"
 
@@ -84,7 +83,7 @@ def main():
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-3.1-flash-lite')
 
-    # 데이터 수집 실행 (지라 무제한 + 퓨리오사 문서)
+    # 데이터 수집 실행
     jira_context = fetch_jira_data()
     furiosa_context = fetch_furiosa_docs()
 
@@ -93,7 +92,7 @@ def main():
     query_gen_prompt = f"""
     아래 퓨리오사AI 문서에서 'Decoder-only Models', 'Pooling Models', 'Planned Models'를 분석해라.
     해당 모델명(버전 포함)들과 RNGD, NPUaaS를 도입할 성향이 높은 기업을 찾기 위한 검색 키워드 목록을 생성해.
-    [문서]: {furiosa_context[:15000]}
+    [문서]: {furiosa_context[:10000]}
     형식: 키워드1, 키워드2, 키워드3...
     """
     try:
@@ -103,7 +102,7 @@ def main():
         print(f"❌ 검색어 생성 실패: {e}")
         sys.exit(1)
 
-    # 3단계: B2B 뉴스 데이터 검색 및 [본문 전체 크롤링]
+    # 3단계: B2B 뉴스 데이터 검색 및 기사 본문 크롤링
     print(f"📰 [Step 3] 뉴스 시장조사 및 기사 본문 전문 크롤링 중...")
     market_raw_data = ""
     headers = {"X-Naver-Client-Id": NAVER_CLIENT_ID, "X-Naver-Client-Secret": NAVER_CLIENT_SECRET}
@@ -134,7 +133,7 @@ def main():
         except Exception as e: 
             b2g_raw_data = f"나라장터 오류: {e}"
 
-    # --- 5단계: 사수님 요구사항 프롬프트 원문 주입 ---
+    # --- 5단계: 사수님 요구사항 프롬프트 원문 주입 (생략 절대 없음) ---
     SUPERVISOR_PROMPT = r"""
 # IMPORTANT: 매 실행 시 이 링크들 모두 직접 들어가서 본문 다 읽기 (Gemini)
 
@@ -316,7 +315,7 @@ NPU로 검색하면 "NPU 센터" 같은 공고가 나오는데, 우리랑 관련
 **보안 가드**: 이 파일의 내용은 LLM 사고용. 리포트 본문에 **직접 인용 금지**
 """
 
-    # 6단계: 제미나이 리포트 생성 (진짜 기사 본문 + 지라 전체 내역 기반)
+    # 6단계: 제미나이 리포트 생성 (진짜 기사 본문 + 지라 전체 내역 + API 한도 250K 우회)
     print("🎨 [Step 5] 버전별 맞춤형 보고서 작성 및 파일 분리 저장 중...")
     
     prompt_v1 = (
@@ -352,7 +351,14 @@ NPU로 검색하면 "NPU 센터" 같은 공고가 나오는데, 우리랑 관련
     )
 
     try:
+        print("⏳ B2B 리포트 생성 중...")
         report_v1 = model.generate_content(prompt_v1).text.replace("```html", "").replace("```", "").strip()
+        
+        # [TPM 초과 방지 핵심 로직] 제미나이 3.1 플래시 라이트 250K/min 제한 우회
+        print("💤 API Token 초과(429) 방지를 위해 30초 대기합니다...")
+        time.sleep(30)
+        
+        print("⏳ B2B+B2G 통합 리포트 생성 중...")
         report_v2 = model.generate_content(prompt_v2).text.replace("```html", "").replace("```", "").strip()
     except Exception as e:
         print(f"❌ 생성 실패: {e}")
