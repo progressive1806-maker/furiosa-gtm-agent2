@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>B2B GTM 리서치 리포트 - 2026년 5월 5주차</title>
+<style>
+    body { font-family: 'Pretendard', sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 10px; }
+    h2 { color: #2c3e50; margin-top: 30px; background: #f8f9fa; padding: 10px; border-left: 5px solid #0056b3; }
+    .company-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+    .tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; margin-right: 5px; }
+    .win-win { background: #e7f3ff; padding: 10px; border-radius: 5px; font-size: 0.95em; }
+    .status { font-weight: bold; color: #d9534f; }
+</style>
+</head>
+<body>
+
+<h1>🚀 GTM 리서치 리포트: B2B 집중 타겟팅</h1>
+
+<h2>1. 핵심 타겟 기업 (퓨리오사AI 핏 매칭 완료)</h2>
+
+<div class="company-card">
+    <h3>① 넷이즈 (NetEase)</h3>
+    <p><strong>선정 근거:</strong> 최근 딥시크 투자 및 자체 AI 운영 인프라 고도화 중. 대규모 추론 워크로드에 대한 자체 최적화 시도 중이며, 엔비디아 의존도를 낮추기 위한 이종 연산 환경 및 효율적 추론 플랫폼 확보가 절실함.</p>
+    <div class="win-win">
+        <strong>Win-Win 시나리오:</strong><br>
+        - <strong>고객 Win:</strong> 추론 효율성 극대화를 통해 토큰당 비용 절감 및 자사 서비스(게임, 에이전트) 성능 고도화.<br>
+        - <strong>퓨리오사 Win:</strong> 글로벌 게임/엔터테인먼트 시장 내 NPU 도입 레퍼런스 확보 및 클라우드 환경 외 별도 엔터프라이즈 서버군 진입.
+    </div>
+    <p><strong>전략 방향:</strong> 중기적 매출 창출. 독자 설계를 지향하는 넷이즈의 성향에 맞춰 RNGD의 최적화 효율성을 입증하는 벤치마크 공유.</p>
+    <p><strong>의사결정자:</strong> 딩레이(CEO) 및 AI 인프라 부문 총괄 CTO</p>
+</div>
+
+<div class="company-card">
+    <h3>② 몽고DB (MongoDB)</h3>
+    <p><strong>선정 근거:</strong> 보이지 AI(Voyage AI)와 결합하여 데이터 인텔리전스 계층을 강화 중. 검색 및 재순위화(Reranking) 연산 증가로 인해 기존 GPU 기반 인프라의 전력 대비 효율성 한계 직면.</p>
+    <div class="win-win">
+        <strong>Win-Win 시나리오:</strong><br>
+        - <strong>고객 Win:</strong> 벡터 DB 연산 효율화로 검색 성능 개선 및 운영 비용 최적화.<br>
+        - <strong>퓨리오사 Win:</strong> 데이터 인프라 전문 기업과의 기술 결합을 통한 범용적 NPU 활용처 확장.
+    </div>
+    <p><strong>전략 방향:</strong> 단기적 파트너십 구축. Pooling Models(Embedding/Reranker) 카테고리 지원을 통한 기술적 핏 강조.</p>
+    <p><strong>의사결정자:</strong> 최고 기술 책임자(CTO) 또는 제품 전략 부문장</p>
+</div>
+
+<h2>2. 경쟁사 동향 분석 (GTM 관점)</h2>
+
+<ul>
+    <li><strong>모레(Moreh) & 텐스토렌트(Tenstorrent):</strong>
+        <ul>
+            <li><strong>주요 성취:</strong> '이종 분산 서빙(Disaggregated Serving)' 구조를 통해 기존 GPU 중심 인프라의 비용 문제를 해결하는 실증 모델 제시.</li>
+            <li><strong>시사점:</strong> 단순 하드웨어 판매를 넘어 소프트웨어 최적화(KV 캐시 전송 효율화 등)를 중심으로 CSP/대기업을 공략하고 있음. 우리 또한 2026.2 SDK의 'Data Parallel Router'와 'Prefix Caching' 기술을 적극 마케팅하여 이와 유사한 최적화 주도권을 선점해야 함.</li>
+        </ul>
+    </li>
+    <li><strong>딥시크(DeepSeek):</strong>
+        <ul>
+            <li><strong>주요 성취:</strong> 파격적인 API 가격 인하(75%)로 시장 가격 기준을 무너뜨리고 있음.</li>
+            <li><strong>시사점:</strong> '추론 최적화'를 통한 토큰당 비용 절감이 기업 고객의 최우선 순위가 됨을 증명. "우리 NPU를 쓰면 딥시크식 가격 정책을 자체 인프라에서도 실현 가능함"을 강조하는 영업 논리 필요.</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>3. 기존 접점 파이프라인 관리</h2>
+<p><em>Jira 연동 기반 데이터 분류</em></p>
+<ul>
+    <li><strong>삼성SDS:</strong> 기존 접점 ✅ (NPUaaS 도입 및 삼성 클라우드 플랫폼 인프라 활용 가속화 필요)</li>
+    <li><strong>네이버클라우드:</strong> 기존 접점 ✅ (소버린 AI 인프라 전략 파트너십 유지 및 고도화)</li>
+    <li><strong>SK C&C:</strong> 기존 접점 ✅ (에이전트 구축 및 엔터프라이즈 AI 최적화 프로젝트 대응)</li>
+    <li><strong>엘리스:</strong> 기존 접점 ✅ (정부 사업 외 민간 에듀테크 확장성 논의 필요)</li>
+</ul>
+
+</body>
+</html>
