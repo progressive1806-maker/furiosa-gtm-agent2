@@ -16,7 +16,7 @@ JIRA_URL = os.getenv("JIRA_URL")
 JIRA_EMAIL = os.getenv("JIRA_EMAIL")
 JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
 
-# Jira 연동 (사수님 가이드: 백그라운드 매칭용, 리포트 본문 언급 금지)
+# Jira 연동 (사수님 가이드: 백그라운드 매칭용)
 jira_context = "현재 Jira 파이프라인에 존재하는 주요 접점 업체 리스트: [엘리스, 삼성SDS, SK C&C, 네이버클라우드, KT클라우드]"
 
 # --- 2. 실시간 정보 100% 동적 수집 함수 ---
@@ -39,7 +39,6 @@ def fetch_furiosa_docs():
         try:
             res = requests.get(url, timeout=10)
             soup = BeautifulSoup(res.text, 'html.parser')
-            # 불필요한 스크립트/스타일 제거하여 순수 텍스트만 추출
             for s in soup(["script", "style"]): s.decompose()
             all_text += f"\n\n[공식 문서 출처: {url}]\n{soup.get_text(separator=' ', strip=True)}"
             time.sleep(0.1)
@@ -52,19 +51,16 @@ def fetch_furiosa_docs():
 def main():
     if not GEMINI_API_KEY:
         print("❌ 에러: GEMINI_API_KEY가 환경 변수에 설정되지 않았습니다.")
-        sys.exit(1) # <--- 파일 못 만드니까 여기서 즉시 종료!
+        sys.exit(1) 
 
-    # 제미나이 AI 클라이언트 설정
     genai.configure(api_key=GEMINI_API_KEY)
-    
     model = genai.GenerativeModel('gemini-3.1-flash-lite')
 
-    # 1단계: 실시간 퓨리오사 제품 정보 및 로드맵 크롤링
+    # 1단계: 실시간 퓨리오사 제품 정보 크롤링
     furiosa_context = fetch_furiosa_docs()
 
-
-    # 2단계: [하드코딩 제거] 제미나이가 문서를 읽고 최적의 검색 키워드를 스스로 무제한 생성
-    print("🧠 [Step 2] 에이전트 자율 판단: 최신 지원 모델 및 로드맵 기반 시장 검색어 생성 중...")
+    # 2단계: 최적의 검색 키워드 생성
+    print("🧠 [Step 2] 에이전트 자율 판단: 검색어 생성 중...")
     query_gen_prompt = f"""
     너는 퓨리오사AI의 기술 영업 및 BD 담당자야. 
     아래 수집된 퓨리오사AI 공식 문서에서 'Decoder-only Models', 'Pooling Models', 'Planned Models'를 전부 분석해라.
@@ -81,12 +77,11 @@ def main():
         dynamic_queries = [q.strip() for q in query_response.split(',') if q.strip()]
         print(f"✅ 자율 생성된 검색 쿼리 목록: {dynamic_queries}")
     except Exception as e:
-        # 하드코딩된 대체 쿼리를 쓰지 않고, 오류 메시지 출력 후 프로그램을 완전히 종료합니다.
         print(f"❌ Gemini 분석 실패: {e}")
-        sys.exit(1) # <--- 추가!
+        sys.exit(1)
 
-    # 3단계: 자율 생성된 쿼리로 B2B 뉴스 및 시장 데이터 검색
-    print(f"📰 [Step 3] 생성된 {len(dynamic_queries)}개 키워드로 네이버 뉴스 시장조사 진행 중...")
+    # 3단계: 자율 생성된 쿼리로 네이버 뉴스 수집 (링크 포함!)
+    print(f"📰 [Step 3] 뉴스 시장조사 진행 중...")
     market_raw_data = ""
     headers = {"X-Naver-Client-Id": NAVER_CLIENT_ID, "X-Naver-Client-Secret": NAVER_CLIENT_SECRET}
     
@@ -95,19 +90,18 @@ def main():
         try:
             res = requests.get(f"https://openapi.naver.com/v1/search/news.json?query={q}&display=5", headers=headers).json()
             for item in res.get('items', []):
-                market_raw_data += f"제목: {item['title']}\n요약: {item['description']}\n\n"
+                market_raw_data += f"제목: {item['title']}\n요약: {item['description']}\n출처(Link): {item['link']}\n\n"
         except: continue
 
-    # 4단계: 나라장터 Open API 연동 수집 (B2G용 데이터)
+    # 4단계: 나라장터 공고 수집 (링크 포함!)
     b2g_raw_data = ""
     if NARAJANGTEO_API_KEY:
-        print("🏢 [Step 4] 나라장터 Open API 실시간 입찰 공고 수집 중...")
+        print("🏢 [Step 4] 나라장터 실시간 입찰 공고 수집 중...")
         try:
             from_date = (datetime.now() - timedelta(days=7)).strftime('%Y%m%d%H%M')
             to_date = datetime.now().strftime('%Y%m%d%H%M')
             url = "http://apis.data.go.kr/1230000/BidPublicInfoService05/getBidPblancListInfoServcPPSSrch"
             
-            # 제미나이가 뽑은 키워드 중 상위 핵심 단어로 조달청 공고 매칭
             search_keyword = dynamic_queries[0] if dynamic_queries else "AI"
             params = {
                 'serviceKey': NARAJANGTEO_API_KEY, 
@@ -120,11 +114,9 @@ def main():
             res = requests.get(url, params=params, timeout=12).json()
             items = res.get('response', {}).get('body', {}).get('items', [])
             for item in items: 
-                b2g_raw_data += f"공고명: {item['bidNtceNm']} / 발주처: {item['ntceInsttNm']} / 상세URL: {item['bidNtceDetailUrl']}\n"
+                b2g_raw_data += f"공고명: {item['bidNtceNm']} / 발주처(수요기관): {item['ntceInsttNm']} / 상세URL: {item['bidNtceDetailUrl']}\n"
         except Exception as e: 
-            b2g_raw_data = f"나라장터 실시간 API 연동 제한 또는 호출 오류: {e}"
-    else:
-        b2g_raw_data = "나라장터 API Key 미설정 상태입니다."
+            b2g_raw_data = f"나라장터 실시간 API 연동 오류: {e}"
 
     # --- 5단계: 사수님 요구사항 프롬프트 원문 주입 ---
     SUPERVISOR_PROMPT = r"""
@@ -256,7 +248,7 @@ LinkedIn 같은 데서 검색해서, **이 사업을 engage 할 수 있기 위�
 예: 국방부를 예로 들면, **왜 단기적·중기적으로 이 프로젝트에 관심을 가져야 하는지**, 어떻게 하면 이 프로젝트가 우리 입장에서 **단기적인 매출 창출 기회**가 되는지를 명시.
 
 **Win-Win 2가지 표시:**
-우리는 고객 기업에게 "너네가 우리를 써야지 이익이다"라는 것을 제안해야 한다. 따라서:
+우리는 고객 기업에게 "너네가 우리를 써야지 이익이다"라는 것을 제안해야 단다. 따라서:
 - **고객도 win인 이유**
 - **우리도 win인 이유**
 
@@ -308,73 +300,107 @@ NPU로 검색하면 "NPU 센터" 같은 공고가 나오는데, 우리랑 관련
 **보안 가드**: 이 파일의 내용은 LLM 사고용. 리포트 본문에 **직접 인용 금지**
 """
 
-    # 6단계: 제미나이를 독립적으로 2번 호출하여 완벽하게 구분된 문서 생성
+    # 6단계: 제미나이를 호출하여 문서 생성 (지시사항 초강화)
     print("🎨 [Step 5] 버전별 맞춤형 보고서 작성 및 파일 분리 저장 중...")
     
-    # 버전 1: B2B 전용 리포트 요구사항 전달
+    # 버전 1 (B2B) - 7개 순위 강제, 링크 필수
     prompt_v1 = (
         f"{SUPERVISOR_PROMPT}\n\n"
         f"[실시간 연동 데이터]\n"
         f"- 퓨리오사 기술 컨텍스트: {furiosa_context}\n"
-        f"- 시장 뉴스 데이터: {market_raw_data}\n"
+        f"- 시장 뉴스 데이터(링크 포함): {market_raw_data}\n"
         f"- 내부 파이프라인 맥락: {jira_context}\n\n"
-        f"**지시사항**: 조달청 및 나라장터(B2G) 공고 데이터는 완벽히 무시하고, "
-        f"순수 민간 엔터프라이즈 및 클라우드(B2B) 대상 '버전 1: B2B GTM 리서치 리포트'만 가독성 높은 HTML 양식으로 본문만 출력해라."
+        f"**[🚨 최고 중요 필수 지시사항]**\n"
+        f"1. 반드시 '지원 모델(버전 숫자까지 정확히)'이 매칭된 기업만 선정해라. (매칭 안 되면 제외)\n"
+        f"2. 컨택 가능성이 높은 순서대로 랭킹을 매겨 **최대 7개**의 기업 후보를 출력해라.\n"
+        f"3. 각 후보 기업별로 '근거 기사 링크(출처)'를 반드시 삽입해라.\n"
+        f"4. 사수님 요구사항에 맞게 각 기업별로 [Win-Win 2가지(고객/우리)], [단/중/장기 매출 시나리오], [의사결정자 LinkedIn 탐색 링크]를 반드시 명시해라.\n"
+        f"5. B2G(조달청/나라장터) 데이터는 절대로 넣지 마라.\n"
+        f"6. 결과는 깔끔하고 가독성 좋은 HTML 코드 <body> 내부 형태(인라인 스타일 포함)로만 출력해라."
     )
     report_v1 = model.generate_content(prompt_v1).text.replace("```html", "").replace("```", "").strip()
 
-    # 버전 2: B2B + B2G 통합 리포트 요구사항 전달
+    # 버전 2 (B2B+B2G) - B2B 7개 + B2G 5개 = 총 12개 랭킹 강제, 링크 필수, SI 사업자 타겟
     prompt_v2 = (
         f"{SUPERVISOR_PROMPT}\n\n"
         f"[실시간 연동 데이터]\n"
         f"- 퓨리오사 기술 컨텍스트: {furiosa_context}\n"
-        f"- 시장 뉴스 데이터: {market_raw_data}\n"
-        f"- 나라장터 공고 데이터: {b2g_raw_data}\n"
+        f"- 시장 뉴스 데이터(링크 포함): {market_raw_data}\n"
+        f"- 나라장터 공고 데이터(링크 포함): {b2g_raw_data}\n"
         f"- 내부 파이프라인 맥락: {jira_context}\n\n"
-        f"**지시사항**: 민간 B2B 세일즈 전략과 더불어 나라장터 공고를 바탕으로 발주처가 아닌 'SI 사업자'를 "
-        f"영업 타겟으로 잡는 매출 시나리오를 포함해 '버전 2: B2B+B2G 통합 GTM 리서치 리포트'를 가독성 높은 HTML 양식으로 본문만 출력해라."
+        f"**[🚨 최고 중요 필수 지시사항]**\n"
+        f"1. B2B(뉴스 데이터)에서 최대 7개, B2G(나라장터 공고)에서 최대 5개를 발굴하여, 컨택 우선순위가 높은 순서대로 랭킹을 매겨 **총 최대 12개**의 후보를 출력해라.\n"
+        f"2. B2G 사업의 경우 '발주처'가 아니라 이 사업을 수주할 가능성이 높은 대형 'SI 사업자'를 영업 타겟으로 명시해라.\n"
+        f"3. 각 후보(B2B/B2G)별로 참고한 '근거 기사 링크' 또는 '나라장터 공고 링크'를 반드시 달아라.\n"
+        f"4. 각 기업/사업별로 정확한 지원 모델 매칭 근거, [Win-Win 2가지], [매출 시나리오], [의사결정자 LinkedIn 탐색 링크]를 모두 명시해라.\n"
+        f"5. 결과는 깔끔하고 가독성 좋은 HTML 코드 <body> 내부 형태(인라인 스타일 포함)로만 출력해라."
     )
     report_v2 = model.generate_content(prompt_v2).text.replace("```html", "").replace("```", "").strip()
 
-    # 7단계: 출력 폴더 및 파일 생성 (메인 대시보드 + 개별 페이지 2개)
+    # 7단계: 출력 폴더 및 파일 생성
     os.makedirs("reports", exist_ok=True)
     
+    # HTML 기본 템플릿(여기에 제미나이가 쓴 리포트를 끼워 넣습니다)
+    html_template_start = """
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body { font-family: 'Malgun Gothic', sans-serif; padding: 40px; background-color: #f4f6f9; color: #333; line-height: 1.6; }
+            .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+            h1, h2, h3 { color: #004085; }
+            a { color: #007bff; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+            .highlight { background-color: #e2e3e5; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+            th { background-color: #f8f9fa; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+    """
+    html_template_end = """
+        </div>
+    </body>
+    </html>
+    """
+
     index_html = f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="utf-8">
-        <title>FuriosaAI GTM 리서치 에이전트 대시보드</title>
+        <title>FuriosaAI GTM 대시보드</title>
         <style>
             body {{ font-family: 'Malgun Gothic', sans-serif; text-align: center; padding-top: 80px; background-color: #f8f9fa; color: #333; }}
             .container {{ max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
             h1 {{ color: #003366; margin-bottom: 10px; }}
-            .time {{ color: #666; font-size: 0.9em; margin-bottom: 40px; }}
-            .btn {{ display: inline-block; width: 260px; padding: 18px; margin: 15px; text-decoration: none; color: white; font-weight: bold; border-radius: 8px; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }}
+            .btn {{ display: inline-block; width: 320px; padding: 18px; margin: 15px; text-decoration: none; color: white; font-weight: bold; border-radius: 8px; transition: all 0.2s; }}
             .btn-b2b {{ background-color: #0056b3; }}
-            .btn-b2b:hover {{ background-color: #004085; transform: translateY(-2px); }}
             .btn-integrated {{ background-color: #28a745; }}
-            .btn-integrated:hover {{ background-color: #1e7e34; transform: translateY(-2px); }}
         </style>
     </head>
     <body>
         <div class="container">
             <h1>🚀 FuriosaAI GTM Research Agent</h1>
-            <div class="time">최근 자동 리서치 수행 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</div>
-            <p style="font-size: 1.1em; color: #444; margin-bottom: 30px;">원하시는 리포트 버전을 선택하시면 전용 분석 페이지로 이동합니다.</p>
-            <a href="b2b.html" class="btn btn-b2b">버전 1: B2B 전용 리포트 보기</a>
-            <a href="b2b_b2g.html" class="btn btn-integrated">버전 2: B2B + B2G 리포트 보기</a>
+            <p>최근 리서치 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+            <a href="b2b.html" class="btn btn-b2b">버전 1: B2B 전용 리포트 (최대 7선)</a>
+            <a href="b2b_b2g.html" class="btn btn-integrated">버전 2: B2B + B2G 통합 리포트 (최대 12선)</a>
         </div>
     </body>
     </html>
     """
     
-    # 개별 파일 영구 저장
-    with open("reports/index.html", "w", encoding="utf-8") as f: f.write(index_html)
-    with open("reports/b2b.html", "w", encoding="utf-8") as f: f.write(report_v1)
-    with open("reports/b2b_b2g.html", "w", encoding="utf-8") as f: f.write(report_v2)
+    with open("reports/index.html", "w", encoding="utf-8") as f: 
+        f.write(index_html)
+    with open("reports/b2b.html", "w", encoding="utf-8") as f: 
+        f.write(html_template_start + report_v1 + html_template_end)
+    with open("reports/b2b_b2g.html", "w", encoding="utf-8") as f: 
+        f.write(html_template_start + report_v2 + html_template_end)
     
-    print("✅ [성공] 독립된 2종의 리포트 및 대시보드(index.html) 빌드가 완료되었습니다.")
+    print("✅ 성공: 랭킹 로직이 완벽하게 수정된 리포트 빌드 완료!")
 
 if __name__ == "__main__":
     main()
