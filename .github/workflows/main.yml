@@ -1,0 +1,40 @@
+name: Furiosa GTM Research Agent
+
+on:
+  schedule:
+    - cron: '0 23 * * 0' # UTC 일요일 23시 = 한국 월요일 오전 8시 자동 정기 실행
+  workflow_dispatch: # 테스트용 수동 실행 버튼 활성화
+
+jobs:
+  run_agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run GTM Research Logic
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          NARAJANGTEO_API_KEY: ${{ secrets.NARAJANGTEO_API_KEY }}
+          JIRA_URL: ${{ secrets.JIRA_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: python gtm_agent.py
+
+      - name: Commit and Push Generated Reports
+        run: |
+          git config --global user.name 'Furiosa-Agent'
+          git config --global user.email 'boyoon.jung@furiosa.ai'
+          git add reports/index.html reports/b2b.html reports/b2b_b2g.html
+          git commit -m "Update Weekly GTM Dashboards and Reports" || echo "No changes detected"
+          git push
