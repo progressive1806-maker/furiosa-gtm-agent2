@@ -1,4 +1,5 @@
 import os
+import sys
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -44,18 +45,19 @@ def fetch_furiosa_docs():
             time.sleep(0.1)
         except Exception as e:
             print(f"⚠️ {url} 수집 실패: {e}")
-            continue
+            sys.exit(1)
     return all_text
 
 # --- 3. 메인 자율 구동부 ---
 def main():
     if not GEMINI_API_KEY:
         print("❌ 에러: GEMINI_API_KEY가 환경 변수에 설정되지 않았습니다.")
-        return
+        sys.exit(1) # <--- 파일 못 만드니까 여기서 즉시 종료!
 
     # 제미나이 AI 클라이언트 설정
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-1.5-pro')
+    
+    model = genai.GenerativeModel('gemini-3.1-flash-lite')
 
     # 1단계: 실시간 퓨리오사 제품 정보 및 로드맵 크롤링
     furiosa_context = fetch_furiosa_docs()
@@ -80,8 +82,8 @@ def main():
         print(f"✅ 자율 생성된 검색 쿼리 목록: {dynamic_queries}")
     except Exception as e:
         # 하드코딩된 대체 쿼리를 쓰지 않고, 오류 메시지 출력 후 프로그램을 완전히 종료합니다.
-        print(f"❌ 검색어 자율 생성 실패! 제미나이 API 오류로 에이전트 실행을 중단합니다: {e}")
-        return
+        print(f"❌ Gemini 분석 실패: {e}")
+        sys.exit(1) # <--- 추가!
 
     # 3단계: 자율 생성된 쿼리로 B2B 뉴스 및 시장 데이터 검색
     print(f"📰 [Step 3] 생성된 {len(dynamic_queries)}개 키워드로 네이버 뉴스 시장조사 진행 중...")
