@@ -1,85 +1,75 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><style>body { font-family: 'Malgun Gothic', sans-serif; padding: 40px; background-color: #f4f6f9; color: #333; line-height: 1.6; } .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); } h1, h2, h3 { color: #004085; } a { color: #007bff; text-decoration: none; word-break: break-all; } a:hover { text-decoration: underline; } table { width: 100%; border-collapse: collapse; margin-bottom: 30px; } th, td { border: 1px solid #ddd; padding: 15px; text-align: left; } th { background-color: #f8f9fa; font-weight: bold; }</style></head><body><div class="container"><body style="font-family: 'Pretendard', sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><style>body { font-family: 'Malgun Gothic', sans-serif; padding: 40px; background-color: #f4f6f9; color: #333; line-height: 1.6; } .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); } h1, h2, h3 { color: #004085; } a { color: #007bff; text-decoration: none; word-break: break-all; } a:hover { text-decoration: underline; } table { width: 100%; border-collapse: collapse; margin-bottom: 30px; } th, td { border: 1px solid #ddd; padding: 15px; text-align: left; } th { background-color: #f8f9fa; font-weight: bold; }</style></head><body><div class="container"><body style="font-family: 'Pretendard', sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
 
-    <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Weekly GTM Research Report — 2026-06-29</h2>
-    <p style="font-size: 0.9em; color: #7f8c8d;">주간 AI 시장 트렌드 분석 및 FuriosaAI 협업 후보군 제안</p>
+    <h1 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px;">GTM 리서치 에이전트 주간 보고 (2026-07-06)</h1>
 
-    <h3 style="color: #2980b9;">1. 주요 타겟 기업 후보 (Engage 핏 기반 Top 7)</h3>
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-        <thead>
-            <tr style="background-color: #f8f9fa;">
-                <th style="border: 1px solid #ddd; padding: 10px;">기업명</th>
-                <th style="border: 1px solid #ddd; padding: 10px;">매칭 모델</th>
-                <th style="border: 1px solid #ddd; padding: 10px;">Engage 핏 근거</th>
-                <th style="border: 1px solid #ddd; padding: 10px;">LinkedIn 의사결정자 검색</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;"><strong>퀄컴 (Qualcomm)</strong></td>
-                <td style="border: 1px solid #ddd; padding: 10px;">범용 LLM/추론 모델</td>
-                <td style="border: 1px solid #ddd; padding: 10px;">데이터센터 인프라 및 전용 CPU 개발, NPU 가속기 수요 확보 중</td>
-                <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=Qualcomm+AI+DataCenter">검색 바로가기</a></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;"><strong>보스반도체</strong></td>
-                <td style="border: 1px solid #ddd; padding: 10px;">Edge/NPU 기반 모델</td>
-                <td style="border: 1px solid #ddd; padding: 10px;">Eagle-N/A 등 차량용 AI 가속기 개발, 칩렛 기반 아키텍처로 협업 가능성 높음</td>
-                <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=Bossemiconductor+AI">검색 바로가기</a></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;"><strong>대동</strong></td>
-                <td style="border: 1px solid #ddd; padding: 10px;">피지컬 AI/로봇</td>
-                <td style="border: 1px solid #ddd; padding: 10px;">농업 AX(AI 전환) 추진 중, AI 로봇 제어 인프라 필요성 증대</td>
-                <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=Daedong+AI">검색 바로가기</a></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;"><strong>LG유플러스</strong></td>
-                <td style="border: 1px solid #ddd; padding: 10px;">EXAONE 4.0</td>
-                <td style="border: 1px solid #ddd; padding: 10px;">퓨리오사AI와 어플라이언스 개발 이력, 공공·국방 B2B 파트너십</td>
-                <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=LGUplus+AI">검색 바로가기</a></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;"><strong>카카오</strong></td>
-                <td style="border: 1px solid #ddd; padding: 10px;">Qwen3/자체모델</td>
-                <td style="border: 1px solid #ddd; padding: 10px;">KT클라우드 플랫폼 내 AI 안전 기술 탑재, 안전한 AI 운영 인프라 니즈</td>
-                <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=Kakao+AI">검색 바로가기</a></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;"><strong>시놀로지</strong></td>
-                <td style="border: 1px solid #ddd; padding: 10px;">온프레미스 LLM</td>
-                <td style="border: 1px solid #ddd; padding: 10px;">AI 데이터 플랫폼 전환 중, 온프레미스 AI 인프라 확충에 NPU 도입 시너지</td>
-                <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=Synology+AI">검색 바로가기</a></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;"><strong>래블업</strong></td>
-                <td style="border: 1px solid #ddd; padding: 10px;">풀스택/추론 모델</td>
-                <td style="border: 1px solid #ddd; padding: 10px;">이종 GPU/NPU 통합 오케스트레이션 플랫폼 보유, 퓨리오사 NPU와 결합 가능성</td>
-                <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=Lablup+AI">검색 바로가기</a></td>
-            </tr>
-        </tbody>
-    </table>
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #444;">1. 핵심 협업 타겟 (B2B 중심)</h2>
+        <p>퓨리오사AI의 지원 모델(Qwen3, EXAONE 4.0 등)을 기반으로 실질적인 최적화 및 인프라 구축을 추진 중인 기업들을 선별했습니다.</p>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr style="background-color: #f8f9fa;">
+                    <th style="border: 1px solid #ddd; padding: 10px;">기업명</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">engage 핏 근거</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">의사결정자 탐색</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><strong>노타(Nota)</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">'K-엑사원 236B'를 퓨리오사AI NPU에 최적화 성공. 온디바이스 AI 경량화 기술력 보유.</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=노타+채명수" target="_blank">LinkedIn 검색</a></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><strong>마음AI</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">딥시크 기반 온프레미스 LLM 출시 준비 중. NPU 기반 추론 인프라 수요 높음.</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=마음AI+최홍섭" target="_blank">LinkedIn 검색</a></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><strong>스트라드비젼</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">글로벌 OEM 대상 ADAS 비전 AI 수주 확대. 고성능 추론 가속기(NPU) 도입 가능성 증대.</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><a href="https://www.linkedin.com/search/results/people/?keywords=스트라드비젼+김준환" target="_blank">LinkedIn 검색</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
-    <h3 style="color: #2980b9;">2. 매출 창출 시나리오 및 Win-Win 전략</h3>
-    <ul style="background-color: #f9f9f9; padding: 20px; border-radius: 5px;">
-        <li><strong>제조/로봇 분야 (보스반도체, 대동)</strong>: 
-            <br>- <strong>이유</strong>: 피지컬 AI 전환을 위한 추론용 NPU 가속기 도입이 필수적.
-            <br>- <strong>고객 Win</strong>: TCO(총소유비용) 절감 및 전성비 개선.
-            <br>- <strong>우리 Win</strong>: 산업 특화형 NPU 레퍼런스 조기 확보 및 서버 파트너십 확장.
-        </li>
-        <li><strong>CSP/인프라 기업 (LG유플러스, 래블업)</strong>: 
-            <br>- <strong>이유</strong>: NPUaaS 환경에서 퓨리오사 NPU 최적화 및 SW 스택 제공.
-            <br>- <strong>고객 Win</strong>: GPU 의존도 탈피 및 인프라 운영 비용 절감.
-            <br>- <strong>우리 Win</strong>: 클라우드 파트너를 통한 대규모 엔드유저 접점 확보 및 매출 확대.
-        </li>
-    </ul>
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #444;">2. 매출 시나리오 및 Win-Win 전략</h2>
+        <ul style="padding-left: 20px;">
+            <li><strong>노타(Nota):</strong> 
+                <ul>
+                    <li><strong>Win-Win:</strong> 노타의 경량화 기술 + 퓨리오사 NPU의 하드웨어 효율성 결합으로 시장 점유율 확대.</li>
+                    <li><strong>매출:</strong> 중·단기적 최적화 프로젝트 협업 및 노타 솔루션 패키지에 퓨리오사 NPU 최적화 번들 포함.</li>
+                </ul>
+            </li>
+            <li><strong>마음AI:</strong>
+                <ul>
+                    <li><strong>Win-Win:</strong> 온프레미스 LLM의 추론 성능 극대화(비용 절감) 및 인프라 신뢰성 확보.</li>
+                    <li><strong>매출:</strong> 단기적으로 RNGD 도입 인프라 공동 구축, 중기적으로 AI 에이전트 전용 클러스터 구축 지원.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
 
-    <h3 style="color: #2980b9;">3. 경쟁사 및 시장 동향 요약</h3>
-    <ul style="list-style-type: circle;">
-        <li><strong>퀄컴의 공격적 확장</strong>: 메타와의 협력을 통해 드래곤플라이 C1000 기반 데이터센터 시장 진출. 엔비디아 의존도를 낮추려는 빅테크 니즈를 적극 공략 중.</li>
-        <li><strong>AI 데이터 보안 강화</strong>: 카카오-KT클라우드 협력 등 '책임 있는 AI'를 위한 보안 가드레일 기술 도입 활발.</li>
-        <li><strong>피지컬 AI 대두</strong>: 로봇 및 설비에 AI를 직접 탑재하는 경향 심화. 단순 데이터 분석을 넘어 물리적 제어와 추론 능력을 동시에 요구함.</li>
-    </ul>
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #444;">3. 경쟁사 동향 및 GTM 활동</h2>
+        <ul style="padding-left: 20px;">
+            <li><strong>엔비디아:</strong> DLSS 4.5 및 DGX 스파크 발표. AI PC 시장 선점 위한 하드웨어-소프트웨어 생태계 결속력 강화.</li>
+            <li><strong>네이버/다음:</strong> AI 검색 고도화 가속. 업스테이지 '솔라' 모델을 다음 검색에 연동하는 등 국산 LLM의 B2C 시장 영향력 확인.</li>
+        </ul>
+    </section>
 
-    <p style="font-size: 0.8em; color: #999;">※ 기존 접점: Jira API 오류로 인해 파이프라인 조회가 불가하여 확인할 수 없습니다.</p>
+    <section>
+        <h2 style="color: #444;">4. 참고한 기사 자료</h2>
+        <ul style="list-style: none; padding: 0;">
+            <li><a href="http://www.itdaily.kr/news/articleView.html?idxno=240164" target="_blank">[IT데일리] 노타 "퓨리오사AI NPU서 'K-엑사원 236B' 최적화 성공"</a></li>
+            <li><a href="https://n.news.naver.com/mnews/article/092/0002361421?sid=105" target="_blank">[지디넷코리아] 마음AI "딥시크 기반 온프레미스 LLM 출시할 것"</a></li>
+            <li><a href="https://n.news.naver.com/mnews/article/018/0006323384?sid=105" target="_blank">[이데일리] 스트라드비젼, 상반기 신규 프로젝트 390억원 수주</a></li>
+        </ul>
+    </section>
 
+    <footer style="margin-top: 40px; font-size: 0.8em; color: #888;">
+        * Jira 연동 오류로 인해 기존 접점 데이터 확인이 제한되었습니다. 수동 확인을 권장합니다.
+    </footer>
 </body></div></body></html>
