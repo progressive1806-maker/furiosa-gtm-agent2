@@ -1,77 +1,91 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><style>body { font-family: 'Malgun Gothic', sans-serif; padding: 40px; background-color: #f4f6f9; color: #333; line-height: 1.6; } .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); } h1, h2, h3 { color: #004085; } a { color: #007bff; text-decoration: none; word-break: break-all; } a:hover { text-decoration: underline; } table { width: 100%; border-collapse: collapse; margin-bottom: 30px; } th, td { border: 1px solid #ddd; padding: 15px; text-align: left; } th { background-color: #f8f9fa; font-weight: bold; }</style></head><body><div class="container"><body>
+    <h1>[GTM Research Report] 2026.08.03</h1>
 
-<h1>GTM 리서치 주간 리포트 (2026-07-27)</h1>
+    <h2>1. Executive Summary</h2>
+    <p>본 리포트는 기사 분석 및 시장 동향을 바탕으로 퓨리오사AI의 NPU 및 클라우드 서비스(NPUaaS) 확장을 위한 1순위 영업 타겟을 제안합니다. 로드맵 모델(Qwen3, EXAONE 4.0 등) 기반의 서비스 개발 기업을 중심으로 핏을 분석했습니다.</p>
 
-<p>본 리포트는 퓨리오사AI 로드맵 지원 모델(Decoder-only, Pooling, Planned)을 활용하는 기업 및 SI 사업자를 타겟팅하여 도출된 결과입니다.</p>
+    <h2>2. B2B 영업 타겟 (협업 가능성 높은 기업)</h2>
+    <table border="1">
+        <tr>
+            <th>기업명</th>
+            <th>engage 핏 근거</th>
+            <th>Win-Win 요인</th>
+            <th>매출 시나리오</th>
+            <th>기사 및 담당자 링크</th>
+        </tr>
+        <tr>
+            <td><strong>쇼피파이</strong></td>
+            <td>Qwen 계열 모델로 AI 비용 절감 사례 보유</td>
+            <td>고객: 모델 추론 최적화로 비용 절감<br>당사: 퓨리오사 NPU 대량 인프라 구축</td>
+            <td>중기: 서비스 전반 NPU 전환</td>
+            <td><a href="https://www.insightkorea.co.kr/news/articleView.html?idxno=250405">관련 기사</a> / <a href="https://www.linkedin.com/company/shopify/">LinkedIn</a></td>
+        </tr>
+        <tr>
+            <td><strong>에어비앤비</strong></td>
+            <td>Moonshot AI 키미 모델 활용</td>
+            <td>고객: 엣지/클라우드 추론 효율 극대화<br>당사: 글로벌 AI 클라우드 레퍼런스 확보</td>
+            <td>장기: NPU 기반 추론 플랫폼 도입</td>
+            <td><a href="https://www.insightkorea.co.kr/news/articleView.html?idxno=250405">관련 기사</a> / <a href="https://www.linkedin.com/company/airbnb/">LinkedIn</a></td>
+        </tr>
+        <tr>
+            <td><strong>지멘스</strong></td>
+            <td>DeepSeek 및 GLM 등 다양한 모델 활용 중</td>
+            <td>고객: 온프레미스 AI 보안/속도 개선<br>당사: 제조분야 NPU 시장 진입</td>
+            <td>중기: 제조 공정 AI 추론 엔진 교체</td>
+            <td><a href="https://www.insightkorea.co.kr/news/articleView.html?idxno=250405">관련 기사</a> / <a href="https://www.linkedin.com/company/siemens/">LinkedIn</a></td>
+        </tr>
+        <tr>
+            <td><strong>엔젠바이오</strong></td>
+            <td>K-엑사원 2.0 및 엑사원 패스 활용</td>
+            <td>고객: 병리 이미지 분석 정밀도/속도 향상<br>당사: 의료 바이오 분야 레퍼런스 구축</td>
+            <td>단기: 고성능 추론용 RNGD 서버 납품</td>
+            <td><a href="https://www.medipana.com/news/articleView.html?idxno=415400">관련 기사</a> / <a href="https://www.linkedin.com/company/ngenebio/">LinkedIn</a></td>
+        </tr>
+        <tr>
+            <td><strong>디앤디파마텍</strong></td>
+            <td>엑사원 케미컬 에이전트 활용 신약 개발</td>
+            <td>고객: 신약 후보 물질 발굴 속도 단축<br>당사: 펩타이드 설계 최적화 연산 지원</td>
+            <td>단기: 연구용 AI 인프라 최적화</td>
+            <td><a href="https://www.medipana.com/news/articleView.html?idxno=415400">관련 기사</a> / <a href="https://www.linkedin.com/company/dd-pharmatech/">LinkedIn</a></td>
+        </tr>
+    </table>
 
-<h2>1. B2B 타겟 기업 (영업 우선순위)</h2>
-<table border="1">
-    <tr>
-        <th>기업명</th>
-        <th>협업 핏 (근거 모델)</th>
-        <th>Win-Win 시나리오</th>
-        <th>의사결정자 LinkedIn</th>
-    </tr>
-    <tr>
-        <td><strong>노타 (Nota)</strong></td>
-        <td>Solar Open 2 (Planned/최적화 대상)</td>
-        <td><strong>고객:</strong> GPU 8장 규모를 2장으로 축소하여 AX 인프라 비용 절감.<br><strong>당사:</strong> 당사 NPU 최적화 SDK 협업을 통한 NPUaaS 레퍼런스 확보.</td>
-        <td><a href="https://www.linkedin.com/in/chaemyungsoo/">채명수 대표</a></td>
-    </tr>
-    <tr>
-        <td><strong>이스트에이드</strong></td>
-        <td>K-EXAONE (지원 모델)</td>
-        <td><strong>고객:</strong> 이글루스 AI 검색 서비스의 추론 속도 개선.<br><strong>당사:</strong> K-EXAONE 최적화 모델 배포를 통한 대규모 트래픽 NPU 전환.</td>
-        <td><a href="https://www.linkedin.com/in/kim-namhyun-456b23/">김남현 대표</a></td>
-    </tr>
-    <tr>
-        <td><strong>인포트렌드</strong></td>
-        <td>고성능 LLM 워크로드 지원</td>
-        <td><strong>고객:</strong> 자사 AI 서버 포트폴리오의 추론 성능 극대화.<br><strong>당사:</strong> 인포트렌드 서버 내 RNGD 탑재를 통한 인프라 시장 확대.</td>
-        <td><a href="https://www.linkedin.com/company/infortrend/">본사 경영진/기술총괄</a></td>
-    </tr>
-    <tr>
-        <td><strong>오픈소스컨설팅</strong></td>
-        <td>GPU/NPU 운영 자동화 솔루션</td>
-        <td><strong>고객:</strong> 다양한 인프라(GPU+NPU) 통합 관리 효율성 증대.<br><strong>당사:</strong> 플레이스 GPU옵스 내 NPU 스케줄링 연동 통한 운영 편의성 확보.</td>
-        <td><a href="https://www.linkedin.com/in/jang-yong-hoon-38032014/">장용훈 대표</a></td>
-    </tr>
-</table>
+    <h2>3. B2G 사업 타겟 (SI 사업자 중심)</h2>
+    <table border="1">
+        <tr>
+            <th>SI 사업자</th>
+            <th>타겟 프로젝트(분야)</th>
+            <th>Win-Win 요인</th>
+            <th>기사 및 담당자 링크</th>
+        </tr>
+        <tr>
+            <td><strong>삼성SDS</strong></td>
+            <td>공공/금융 AI 인프라(NPUaaS) 구축 사업</td>
+            <td>SI: 고성능/저전력 NPU 포트폴리오 확보<br>당사: SCP 기반 NPUaaS 점유율 확대</td>
+            <td><a href="https://www.world.co.kr/news/articleView.html?idxno=147829">관련 기사</a> / <a href="https://www.linkedin.com/company/samsungsds/">LinkedIn</a></td>
+        </tr>
+        <tr>
+            <td><strong>LG CNS</strong></td>
+            <td>피지컬 AI 로봇 관제 및 제조 AX 사업</td>
+            <td>SI: 피지컬 AI 기술 우위 확보<br>당사: 제조·물류 로봇 NPU 시장 선점</td>
+            <td><a href="https://www.thelec.kr/news/articleView.html?idxno=60380">관련 기사</a> / <a href="https://www.linkedin.com/company/lgcns/">LinkedIn</a></td>
+        </tr>
+        <tr>
+            <td><strong>KT</strong></td>
+            <td>지능형 CCTV 및 교통 인프라 AI 엣지</td>
+            <td>SI: 실시간 영상 분석 서비스 차별화<br>당사: 온디바이스 AIoT 엣지박스 공급</td>
+            <td><a href="https://www.itbiznews.com/news/articleView.html?idxno=220650">관련 기사</a> / <a href="https://www.linkedin.com/company/ktcorp/">LinkedIn</a></td>
+        </tr>
+    </table>
 
-<h2>2. B2G 타겟 SI 사업자 (공공부문)</h2>
-<p>발주처(국방부, 도로공사 등)가 아닌, 실제 사업을 수행하는 SI 파트너입니다.</p>
-<table border="1">
-    <tr>
-        <th>SI 사업자명</th>
-        <th>타겟 프로젝트 성격</th>
-        <th>영업 전략</th>
-    </tr>
-    <tr>
-        <td><strong>LIG 디펜스&에어로스페이스</strong></td>
-        <td>국방 전장 운영체계 AI 통합</td>
-        <td>지휘통제 AI 모델의 NPU 기반 온프레미스 고속 추론 솔루션 제안.</td>
-    </tr>
-    <tr>
-        <td><strong>다이퀘스트</strong></td>
-        <td>공공기관 OKMS 지식관리 플랫폼</td>
-        <td>공공 AI 도입 시 보안성을 강조한 NPU 기반 온프레미스 RAG 인프라 공급.</td>
-    </tr>
-</table>
+    <h2>4. 경쟁사 동향 및 GTM 대응</h2>
+    <ul>
+        <li><strong>경쟁사 동향:</strong> 딥시크(DeepSeek)의 오픈소스 모델 저가 공세가 거셈. 삼성SDS와 같은 CSP와 협력하여 NPUaaS 생태계를 구축하려는 움직임이 가속화됨.</li>
+        <li><strong>대응 전략:</strong> 단순히 칩 판매에 그치지 않고, 삼성 SDS의 SCP 위에서 구동되는 NPUaaS 최적화 기술력을 앞세워 '전력 효율성'을 극대화하는 고객(제조, 의료) 타겟팅.</li>
+    </ul>
 
-<h2>3. 경쟁사 동향 (GTM 관점)</h2>
-<ul>
-    <li><strong>엔비디아 (NVIDIA):</strong> DLSS 4.5 및 DGX 스파크 출시를 통해 AI PC 생태계 장악력 강화. CSP 대상의 강력한 번들링 전략 유지 중.</li>
-    <li><strong>노타-업스테이지 연합:</strong> 엣지 및 클라우드 양방향에서 모델 경량화 기술을 통해 GPU 점유율을 줄이는(8장→2장) '운영 비용 절감' 캠페인 가속화.</li>
-</ul>
-
-<h2>4. 참고 자료</h2>
-<ul>
-    <li><a href="https://www.datanet.co.kr/news/articleView.html?idxno=213317">데이터넷: 노타, '솔라 오픈2' 전용 경량화 모델 공개</a></li>
-    <li><a href="https://it.chosun.com/news/articleView.html?idxno=2023092166174">IT조선: 영상 콘텐츠 AI 자동 텍스트화, 이글루스 개편</a></li>
-    <li><a href="http://www.newsroad.co.kr/news/articleView.html?idxno=61798">뉴스로드: K방산 전장 운영체계 LIG-LG AI 연합</a></li>
-    <li><a href="https://n.news.naver.com/mnews/article/092/0002430854?sid=105">지디넷: 오픈소스컨설팅, GPU 운영 자동화 솔루션 출시</a></li>
-</ul>
-
-<p><strong>[알림]</strong> Jira 및 나라장터 실시간 연동 데이터는 네트워크 오류 및 API 제약으로 인해 일시적으로 제한되었습니다. 다음 업데이트 시 재시도 예정입니다.</p>
-
+    <h2>5. Jira 접점 확인</h2>
+    <ul>
+        <li>현재 Jira 연동 오류로 인해 기존 파이프라인 데이터 확인 불가 (오류: Unbounded JQL). IT팀 조치 후 재확인 예정.</li>
+    </ul>
 </body></div></body></html>
