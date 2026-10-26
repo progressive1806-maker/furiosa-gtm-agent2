@@ -1,81 +1,60 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><style>body { font-family: 'Malgun Gothic', sans-serif; padding: 40px; background-color: #f4f6f9; color: #333; line-height: 1.6; } .container { max-width: 1000px; margin: 0 auto; background: white; padding: 50px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); } h1, h2, h3 { color: #004085; } a { color: #007bff; text-decoration: none; word-break: break-all; } a:hover { text-decoration: underline; } table { width: 100%; border-collapse: collapse; margin-bottom: 30px; } th, td { border: 1px solid #ddd; padding: 15px; text-align: left; } th { background-color: #f8f9fa; font-weight: bold; }</style></head><body><div class="container"><body>
-    <h1>FuriosaAI GTM 리서치 리포트 (2026년 10월 3주차)</h1>
+
+    <h1>[GTM 리서치 리포트] 2026년 10월 4주차</h1>
+    <p>본 리포트는 퓨리오사AI의 지원 가능 모델 및 NPU 기술 로드맵에 기반하여 단기·중기 매출 창출이 유망한 B2B/B2G 타겟 리스트를 선별한 것입니다.</p>
+
+    <h2>1. 타겟 기업 랭킹 (B2B + B2G)</h2>
     
-    <h2>1. Executive Summary</h2>
-    <p>본 리포트는 퓨리오사AI의 지원 모델 로드맵(Qwen3, EXAONE 4.5, Llama 3.3 등)과 실시간 시장 동향을 결합하여, 단기 매출 창출이 가능한 전략적 타겟 기업을 선별하였습니다. 특히 NPUaaS 확장을 위해 삼성 SDS SCP 기반 생태계 및 대규모 추론 인프라를 구축 중인 SI 기업을 핵심 타겟으로 선정했습니다.</p>
-
-    <h2>2. B2B 타겟 기업 (영업 기회 우선순위)</h2>
     <table border="1">
         <tr>
-            <th>기업명</th>
-            <th>engage 핏 근거</th>
-            <th>Win-Win 시나리오</th>
-            <th>의사결정자 LinkedIn</th>
+            <th>구분</th><th>기업명</th><th>타겟 유형</th><th>매출 창출 이유</th><th>Win-Win 요인</th><th>의사결정자 LinkedIn</th></tr>
         </tr>
         <tr>
-            <td><strong>코어위브 (CoreWeave)</strong></td>
-            <td>루빈 기반 NVL72 서버 인프라 구축 중. 추론 성능 최적화 수요 높음.</td>
-            <td>(고객) 비용 절감 및 추론 처리량 극대화<br>(퓨리오사) RNGD 대규모 클라우드 인프라 탑재</td>
-            <td><a href="https://www.linkedin.com/company/coreweave">LinkedIn Link</a></td>
+            <td>B2B</td><td><strong>LG전자</strong></td><td>산업용 스마트팩토리</td><td>시화호 조력발전소 AI 전환 및 등대공장 구축. 퓨리오사 NPUaaS 최적의 온프레미스/클라우드 하이브리드 수요처</td><td>고객: 운영 효율화 및 안전 강화 / 당사: 산업용 NPU 실증 및 점유율 확보</td><td><a href="https://www.linkedin.com/in/seung-ki-lee-72a39213/">LG전자 스마트팩토리 솔루션센터장</a></td>
         </tr>
         <tr>
-            <td><strong>삼성 SDS</strong></td>
-            <td>7월 NPUaaS 출시. 퓨리오사 RNGD의 핵심 클라우드 파트너.</td>
-            <td>(고객) SCP 기반 고성능 NPU 인프라 라인업 강화<br>(퓨리오사) CSP 직접 공급 및 NPUaaS 점유 확대</td>
-            <td><a href="https://www.linkedin.com/company/samsung-sds">LinkedIn Link</a></td>
+            <td>B2B</td><td><strong>크래프톤</strong></td><td>자체 LLM/게임 AI</td><td>'라온-1 미니' 모델 개발 및 고성능 추론 서비스 운용. 추론 비용 최적화 필수</td><td>고객: 모델 추론 단가 대폭 절감 / 당사: 고성능 추론 모델 레퍼런스 확보</td><td><a href="https://www.linkedin.com/in/changhan-kim-095a5611/">크래프톤 CEO</a></td>
         </tr>
         <tr>
-            <td><strong>코그니션 (Cognition)</strong></td>
-            <td>코어위브 기반 AI 코딩 에이전트 서비스 운영. 추론 속도 최적화 필수.</td>
-            <td>(고객) 에이전트 응답 속도 및 비용 효율성 확보<br>(퓨리오사) 에이전트 서비스 최적화 레퍼런스 확보</td>
-            <td><a href="https://www.linkedin.com/company/cognition-ai">LinkedIn Link</a></td>
+            <td>B2B</td><td><strong>아크릴</strong></td><td>피지컬 AI/로봇</td><td>'Jonathan PAI' 플랫폼 내 로봇 7종 통합 제어. VLA 모델 연산 가속 필수</td><td>고객: 로봇-AI 연동 latency 최소화 / 당사: 로봇용 Edge AI 시장 진입</td><td><a href="https://www.linkedin.com/in/외진-박-202a0a25/">아크릴 대표이사</a></td>
         </tr>
         <tr>
-            <td><strong>엘리스 (Elice)</strong></td>
-            <td>정부 주도 AI 교육/서비스 인프라 운영. 온프레미스/클라우드 전환 수요.</td>
-            <td>(고객) 교육/평가 시스템의 인프라 비용 절감<br>(퓨리오사) 공공 B2G 사업 레퍼런스 확보</td>
-            <td><a href="https://www.linkedin.com/company/elice-io">LinkedIn Link</a></td>
+            <td>B2B</td><td><strong>미소정보기술</strong></td><td>의료 AI/EMR</td><td>'닥터펜슬' 기반 EMR 자동화. 의료 데이터 실시간 처리에 NPU 저전력 성능 요구</td><td>고객: 의료진 행정 업무 대폭 경감 / 당사: 공공/의료 시장 대규모 데이터 처리 레퍼런스</td><td><a href="https://www.linkedin.com/in/동욱-안-876a3b2b/">미소정보기술 의장</a></td>
         </tr>
         <tr>
-            <td><strong>네이버 클라우드</strong></td>
-            <td>HyperCLOVA X 기반 추론 수요 폭발. 자체 인프라 효율화 필요.</td>
-            <td>(고객) GPU 의존도 분산 및 서비스 단가 경쟁력 확보<br>(퓨리오사) 국내 최대 하이퍼스케일 고객사 확보</td>
-            <td><a href="https://www.linkedin.com/company/naver-cloud">LinkedIn Link</a></td>
+            <td>B2B</td><td><strong>나무기술</strong></td><td>클라우드/MLOps</td><td>글로벌 S사 MLOps 확장 사업 수행. 다양한 가속기 통합 관리 기술 보유</td><td>고객: 쿠버네티스 기반 MLOps 운영 고도화 / 당사: 칵테일클라우드 연동 NPUaaS 생태계 확장</td><td><a href="https://www.linkedin.com/in/철-정-9b6b8b12/">나무기술 대표이사</a></td>
+        </tr>
+        <tr>
+            <td>B2G</td><td><strong>삼성SDS (SI)</strong></td><td>클라우드/NPUaaS</td><td>삼성 클라우드 플랫폼(SCP) 내 NPUaaS 인프라 파트너.</td><td>고객: 클라우드 차별화 인프라 확보 / 당사: RNGD 클라우드 시장 확장 핵심 파트너</td><td><a href="https://www.linkedin.com/in/성우-황-4a7b8b2b/">삼성SDS 클라우드사업부장</a></td>
+        </tr>
+        <tr>
+            <td>B2G</td><td><strong>오케스트로 (SI)</strong></td><td>공공 인프라</td><td>'소버린 AI' 통합 인프라 사업. 정부기관 AI 전환 주도</td><td>고객: 국산 AI 기술 내재화 성공 / 당사: 공공부문 NPU 생태계 공식 인증</td><td><a href="https://www.linkedin.com/in/소아-박-3a4b5c6d/">오케스트로 클라우드 대표이사</a></td>
         </tr>
     </table>
 
-    <h2>3. B2G SI 사업자 타겟 (조달청 공고 연계)</h2>
-    <table border="1">
-        <tr>
-            <th>SI 사업자</th>
-            <th>연계 사업/공고</th>
-            <th>매출 시나리오</th>
-            <th>기존 접점</th>
-        </tr>
-        <tr>
-            <td><strong>삼성 SDS</strong></td>
-            <td>지자체 AI CCTV 고도화 사업 (나라장터 공고)</td>
-            <td>발주처 요건에 맞춘 NPU 탑재 서버 설계 제안</td>
-            <td>기존접점: 내부 프로젝트 ✅</td>
-        </tr>
-        <tr>
-            <td><strong>LG CNS</strong></td>
-            <td>공공기관 AI 기반 자율운영 플랫폼 구축</td>
-            <td>'레드햇 AI 엔터프라이즈'와 연동한 NPU 인프라 통합</td>
-            <td>기존접점: 없음</td>
-        </tr>
-    </table>
-
-    <h2>4. 경쟁사 동향 및 GTM 대응</h2>
+    <h2>2. 경쟁사 동향 및 전략적 성취</h2>
     <ul>
-        <li><strong>엔비디아 (NVIDIA)</strong>: 'RTX 스파크' 출시 및 오픈모델 규제 대응을 위한 SAFE 가이드라인 주도. 하드웨어 독점력을 바탕으로 소프트웨어 표준까지 잠식 시도 중.</li>
-        <li><strong>대응 전략</strong>: 엔비디아가 HBM 메모리 병목 및 고비용 GPU 이슈를 겪고 있는 점을 공략. 'NPU 기반 고효율 추론'이라는 퓨리오사만의 가성비 차별점을 <strong>코어위브/삼성SDS와 같은 인프라 기업</strong>에 집중 제안하여 락인(Lock-in) 방지.</li>
+        <li><strong>엔비디아 (전략적 제휴):</strong> 미스트랄AI와 1조 파라미터 시뮬레이션 협업. Nscale 테스트를 통한 전력 대비 성능 효율 50% 향상 입증. 하드웨어/소프트웨어 스택 통합 전략 강화 중.</li>
+        <li><strong>미니맥스 (Day 0 호환):</strong> 쿤룬신 반도체 플랫폼에서 신모델 'M3.1 플래시'를 공개 즉시 구동. 모델 공개-반도체 최적화 사이의 latency를 제거하는 'Day 0' 전략으로 개발자 Lock-in 강화.</li>
     </ul>
 
-    <h2>5. 리포트 근거 자료</h2>
+    <h2>3. 분석 근거 및 로드맵 매칭</h2>
     <ul>
-        <li>지원 모델: <a href="https://developer.furiosa.ai/latest/en/overview/supported_models.html">Supported Models</a></li>
-        <li>기술 동향: "엔비디아 'RTX 스파크' 공식 출시" (<a href="https://it.chosun.com/news/articleView.html?idxno=2023092172206">링크</a>)</li>
-        <li>시장 동향: "망고부스트, '망고 인퍼런스' 정식 출시" (<a href="https://it.donga.com/109681/">링크</a>)</li>
+        <li><strong>지원 모델 매칭:</strong> 언급된 타겟 기업들은 Qwen3, Exaone4.5, Llama 3.1 등 당사 3개 지원 모델 카테고리(Decoder-only, Pooling, Planned)와 일치하는 서비스/모델을 운영 중임.</li>
+        <li><strong>매출 시나리오:</strong> 
+            <ul>
+                <li>단기: 엣지/온프레미스 기반의 AI 추론 최적화 프로젝트 (크래프톤, 미소정보기술)</li>
+                <li>중기: CSP/데이터센터 연동 NPUaaS 인프라 공급 (삼성SDS, 오케스트로)</li>
+                <li>장기: 피지컬 AI 및 로보틱스용 고효율 NPU/SDK 생태계 구축 (아크릴, LG전자)</li>
+            </ul>
+        </li>
     </ul>
+
+    <h2>4. 공고 및 관련 링크</h2>
+    <ul>
+        <li><a href="https://it.chosun.com/news/articleView.html?idxno=2023092172617">다시 열린 오픈 웨이트의 계절 [정원훈의 AI 트렌드]</a></li>
+        <li><a href="https://www.lcnews.co.kr/news/articleView.html?idxno=210071">LG전자, 시화조력발전소 AI 전환 협력</a></li>
+        <li><a href="https://www.venturesquare.net/1120948/">오케스트로 클라우드·퓨리오사AI·업스테이지 등 5개사 통합 인프라 개발</a></li>
+    </ul>
+
 </body></div></body></html>
